@@ -26,36 +26,3 @@ resource "aws_security_group" "bastion-sg" {
       "0.0.0.0/0"]
   }
 }
-
-resource "aws_instance" "bastion" {
-  ami = "${var.ami_kind}"
-
-  instance_type = "${var.vm_kind}"
-
-  associate_public_ip_address = true
-
-  key_name = "${aws_key_pair.bastion-key.key_name}"
-  security_groups = [
-    "${aws_security_group.bastion-sg.id}"]
-
-  subnet_id = "${aws_default_subnet.default.id}"
-
-  provisioner "file" {
-
-    source = "./${aws_key_pair.bastion-key.key_name}.pem"
-    destination = "/home/ec2-user/${aws_key_pair.bastion-key.key_name}.pem"
-
-    connection {
-      user = "ec2-user"
-    }
-  }
-
-/*  provisioner "local-exec" {
-    command = "chmod 400 /home/ec2-user/${aws_key_pair.bastion-key.key_name}.pem"
-
-    connection {
-      user = "ec2-user"
-    }
-  }*/
-
-}
