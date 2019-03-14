@@ -3,9 +3,9 @@ resource "aws_instance" "vm" {
 
   instance_type = "${var.vm_kind}"
 
-  associate_public_ip_address = false
-
   key_name = "${aws_key_pair.bastion-key.key_name}"
+
+  count = "${var.private-vm-count}"
 
   security_groups = [
     "${aws_security_group.bastion-sg.id}",
@@ -14,6 +14,6 @@ resource "aws_instance" "vm" {
   subnet_id = "${aws_subnet.private_subnet.id}"
 
   tags = {
-    Name = "vm"
+    Name = "node"
   }
 }
