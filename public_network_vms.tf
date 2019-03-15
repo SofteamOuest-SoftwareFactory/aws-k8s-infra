@@ -15,32 +15,34 @@ resource "aws_instance" "bastion" {
 
   associate_public_ip_address = true
 
-
   provisioner "file" {
-    content = "${aws_key_pair.bastion-key.public_key}"
-    destination = "/home/ec2-user/${aws_key_pair.bastion-key.key_name}.pem"
+    source = "~/.ssh/id_rsa"
+    destination = "/home/ec2-user/bastion-key.pem"
 
     connection {
       type = "ssh"
       user = "ec2-user"
-      private_key = "${file("~/.ssh/id_rsa")}"
+      private_key = "${file("bastion-key.pem")}"
     }
   }
 
-
   provisioner "remote-exec" {
-
     inline = [
-      "chmod 400 /home/ec2-user/${aws_key_pair.bastion-key.key_name}.pem",
-      "sudo yum install -y python-pip",
+      "chmod 400 /home/ec2-user/bastion-key.pem",
+      "sudo yum install -y python-pip git",
       "sudo pip install ansible boto",
-      "wget "
+      "sudo mkdir /etc/ansible",
+      "sudo wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.py -O /etc/ansible/hosts",
+      "sudo chmod ugo+rx /etc/ansible/hosts",
+      "sudo wget https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/ec2.ini -O /etc/ansible/ec2.ini",
+      "git clone https://github.com/SofteamOuest-SoftwareFactory/software-factory.git"
+
     ]
 
     connection {
       type = "ssh"
       user = "ec2-user"
-      private_key = "${file("~/.ssh/id_rsa")}"
+      private_key = "${file("bastion-key.pem")}"
     }
   }
 

@@ -22,15 +22,15 @@ variable public-vm-count {
 }
 
 variable private-network-enable {
-  default = 0
+  default = 1
 }
 
 variable private-network-egress-enable {
-  default = 0
+  default = 1
 }
 
 variable private-vm-count {
-  default = 0
+  default = 1
 }
 
 variable private_cidr {
