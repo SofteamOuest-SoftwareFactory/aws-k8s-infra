@@ -29,7 +29,11 @@ variable private-network-egress-enable {
   default = 1
 }
 
-variable private-vm-count {
+variable private-node-count {
+  default = 3
+}
+
+variable private-master-count {
   default = 1
 }
 
