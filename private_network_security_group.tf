@@ -1,10 +1,10 @@
-resource "aws_security_group" "private_network_sg" {
-  name = "bastion-security-group"
+resource "aws_security_group" "private-network-sg" {
+  name = "private-network-sg"
 
   vpc_id = "${aws_default_vpc.default.id}"
 
   ingress {
-    protocol = "tcp"
+    protocol = -1
     from_port = 0
     to_port = 0
 

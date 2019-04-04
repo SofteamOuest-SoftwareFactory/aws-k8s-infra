@@ -9,7 +9,7 @@ resource "aws_instance" "master" {
 
   security_groups = [
     "${aws_security_group.bastion-sg.id}",
-    "${aws_security_group.private_network_sg.id}"
+    "${aws_security_group.private-network-sg.id}"
   ]
 
   subnet_id = "${aws_subnet.private_subnet.id}"

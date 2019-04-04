@@ -1,5 +1,5 @@
 resource "aws_security_group" "bastion-sg" {
-  name = "bastion-security-group"
+  name = "bastion-sg"
 
   vpc_id = "${aws_default_vpc.default.id}"
 

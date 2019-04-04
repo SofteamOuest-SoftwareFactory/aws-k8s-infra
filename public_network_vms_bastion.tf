@@ -30,7 +30,7 @@ resource "aws_instance" "bastion" {
     inline = [
       "chmod 400 /home/ec2-user/bastion-key.pem",
       "sudo yum install -y python-pip git",
-      "sudo pip install ansible boto",
+      "sudo pip install ansible boto boto3 botocore",
       "sudo mkdir /etc/ansible",
       "git clone https://github.com/SofteamOuest-SoftwareFactory/software-factory.git"
     ]
